@@ -1,0 +1,278 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: ACR Connect Gateway
+  description: ACR Connect Platform component that acts as an API gateway and provides Service Registry and Security services to ACR Connect applications.
+  
+paths:
+  /internal/version:
+    get:
+      tags:
+      - InternalVersion
+      operationId: Get
+      consumes: []
+      produces: []
+      parameters: []
+      responses:
+        200:
+          description: Success
+          
+      
+    
+  /api/services:
+    get:
+      tags:
+      - PublicServices
+      operationId: GetAllServices
+      consumes: []
+      produces: []
+      parameters: []
+      responses:
+        200:
+          description: Success
+          
+      
+    
+  /api/services/{id}:
+    get:
+      tags:
+      - PublicServices
+      operationId: GetService
+      consumes: []
+      produces: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        
+      responses:
+        200:
+          description: Success
+          
+      
+    put:
+      tags:
+      - PublicServices
+      operationId: AddOrUpdateServiceAsync
+      consumes:
+      - application/json-patch+json
+      - application/json
+      - text/json
+      - application/*+json
+      produces: []
+      parameters:
+      - name: input
+        in: body
+        
+        schema:
+          $ref: '#/definitions/ServiceResource'
+          
+      - name: id
+        in: path
+        required: true
+        type: string
+        
+      responses:
+        200:
+          description: Success
+          
+      
+    delete:
+      tags:
+      - PublicServices
+      operationId: RemoveServiceAsync
+      consumes: []
+      produces: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        
+      responses:
+        200:
+          description: Success
+          
+      
+    patch:
+      tags:
+      - PublicServices
+      operationId: EnableDisableServiceAsync
+      consumes:
+      - application/json-patch+json
+      - application/json
+      - text/json
+      - application/*+json
+      produces: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        
+      - name: patch
+        in: body
+        
+        schema:
+          $ref: '#/definitions/ServiceResourcePatch'
+          
+      responses:
+        200:
+          description: Success
+          
+      
+    
+  /api/services/{id}/logo:
+    get:
+      tags:
+      - PublicServices
+      operationId: GetServiceLogo
+      consumes: []
+      produces: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        
+      - name: width
+        in: query
+        type: integer
+        
+        default: 200
+        
+      - name: height
+        in: query
+        type: integer
+        
+        default: 200
+        
+      responses:
+        200:
+          description: Success
+          
+      
+    
+  /ui/currentSession:
+    get:
+      tags:
+      - PublicSession
+      operationId: GetCurrentSessionAsync
+      consumes: []
+      produces: []
+      parameters: []
+      responses:
+        200:
+          description: Success
+          
+      
+    
+  /ui/signin:
+    get:
+      tags:
+      - PublicSession
+      operationId: SignIn
+      consumes: []
+      produces: []
+      parameters: []
+      responses:
+        200:
+          description: Success
+          
+      
+    
+  /ui/signout:
+    get:
+      tags:
+      - PublicSession
+      operationId: Logout
+      consumes: []
+      produces: []
+      parameters: []
+      responses:
+        200:
+          description: Success
+          
+      
+    
+  /api/externalToken:
+    post:
+      tags:
+      - PublicToken
+      operationId: IssueToken
+      consumes:
+      - application/x-www-form-urlencoded
+      produces: []
+      parameters:
+      - name: token
+        in: formData
+        type: string
+        
+      responses:
+        200:
+          description: Success
+          
+      
+    
+definitions:
+  ServiceResource:
+    type: object
+    properties:
+      serviceType:
+        description: >2+
+
+
+        enum:
+        - service
+        - uI
+        type: string
+        
+      id:
+        type: string
+        
+      name:
+        type: string
+        
+      description:
+        type: string
+        
+      currentVersion:
+        type: string
+        
+      releaseDate:
+        format: date-time
+        type: string
+        
+      enabled:
+        type: boolean
+        
+      vendor:
+        type: string
+        
+      logoUri:
+        type: string
+        
+      logoMimeType:
+        type: string
+        
+      logoBytes:
+        format: byte
+        type: string
+        
+      address:
+        type: string
+        
+      port:
+        
+        type: integer
+        
+    
+  ServiceResourcePatch:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        
+    
+
